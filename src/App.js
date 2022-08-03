@@ -8,10 +8,14 @@ import { Storage } from "aws-amplify";
 
 function App() {
 	const { unityProvider, isLoaded, loadingProgression } = useUnityContext({
-		loaderUrl: "unity/Sample.loader.js",
-		dataUrl: "unity/Sample.data",
-		frameworkUrl: "unity/Sample.framework.js",
-		codeUrl: "unity/Sample.wasm",
+		loaderUrl:
+			"https://unitywebglfile164239-dev.s3.ap-northeast-2.amazonaws.com/public/Sample.loader.js",
+		dataUrl:
+			"https://unitywebglfile164239-dev.s3.ap-northeast-2.amazonaws.com/public/Sample.data",
+		frameworkUrl:
+			"https://unitywebglfile164239-dev.s3.ap-northeast-2.amazonaws.com/public/Sample.framework.js",
+		codeUrl:
+			"https://unitywebglfile164239-dev.s3.ap-northeast-2.amazonaws.com/public/Sample.wasm",
 	});
 
 	const loadingPercentage = Math.round(loadingProgression * 100);
