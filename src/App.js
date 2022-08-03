@@ -9,7 +9,7 @@ function App() {
 		loaderUrl: "unity/Sample.loader.js",
 		dataUrl: "unity/Sample.data",
 		frameworkUrl: "unity/Sample.framework.js",
-		codeUrl: "unity//Sample.wasm",
+		codeUrl: "unity/Sample.wasm",
 	});
 
 	return (
