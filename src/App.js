@@ -1,8 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import { Unity, useUnityContext } from "react-unity-webgl";
+
+import { Storage } from "aws-amplify";
 
 function App() {
 	const { unityProvider, isLoaded, loadingProgression } = useUnityContext({
