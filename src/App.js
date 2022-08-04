@@ -9,13 +9,13 @@ import { Storage } from "aws-amplify";
 function App() {
 	const { unityProvider, isLoaded, loadingProgression } = useUnityContext({
 		loaderUrl:
-			"https://unitywebglfile164239-dev.s3.ap-northeast-2.amazonaws.com/public/webgl_test.loader.js",
+			"https://unitywebglfile164239-dev.s3.ap-northeast-2.amazonaws.com/public/mac_test.loader.js",
 		dataUrl:
-			"https://unitywebglfile164239-dev.s3.ap-northeast-2.amazonaws.com/public/webgl_test.data",
+			"https://unitywebglfile164239-dev.s3.ap-northeast-2.amazonaws.com/public/mac_test.data",
 		frameworkUrl:
-			"https://unitywebglfile164239-dev.s3.ap-northeast-2.amazonaws.com/public/webgl_test.framework.js",
+			"https://unitywebglfile164239-dev.s3.ap-northeast-2.amazonaws.com/public/mac_test.framework.js",
 		codeUrl:
-			"https://unitywebglfile164239-dev.s3.ap-northeast-2.amazonaws.com/public/webgl_test.wasm",
+			"https://unitywebglfile164239-dev.s3.ap-northeast-2.amazonaws.com/public/mac_test.wasm",
 	});
 
 	const loadingPercentage = Math.round(loadingProgression * 100);
@@ -63,8 +63,8 @@ function App() {
 	return (
 		<Unity
 			unityProvider={unityProvider}
-			style={{ width: innerHeight, height: innerWidth }}
-			devicePixelRatio={devicePixelRatio}
+			style={{ width: innerWidth, height: innerHeight }}
+			// devicePixelRatio={devicePixelRatio}
 		/>
 	);
 }

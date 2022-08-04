@@ -1,4 +1,4 @@
-html {
+/* html {
   transform: rotate(-90deg);
   transform-origin: top left;
   position: absolute;
@@ -6,7 +6,7 @@ html {
   left: 0;
   width: 100vh;
   height: 100vw;
-}
+} */
 
 .App {
   text-align: center;
