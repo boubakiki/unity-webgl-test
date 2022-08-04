@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 
-import React, { useState, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Unity, useUnityContext } from "react-unity-webgl";
 
 import { Storage } from "aws-amplify";
@@ -23,6 +23,9 @@ function App() {
 	const [devicePixelRatio, setDevicePixelRatio] = useState(
 		window.devicePixelRatio,
 	);
+
+	const [innerWidth, setInnerWidth] = useState(window.innerWidth);
+	const [innerHeight, setInnerHeight] = useState(window.innerHeight);
 
 	const handleChangePixelRatio = useCallback(
 		function () {
@@ -50,10 +53,17 @@ function App() {
 		[devicePixelRatio],
 	);
 
+	useEffect(() => {
+		window.addEventListener("resize", () => {
+			setInnerWidth(window.innerWidth);
+			setInnerHeight(window.innerHeight);
+		});
+	}, []);
+
 	return (
 		<Unity
 			unityProvider={unityProvider}
-			// style={{ width: 1920, height: 1080 }}
+			style={{ width: innerHeight, height: innerWidth }}
 			devicePixelRatio={devicePixelRatio}
 		/>
 	);
