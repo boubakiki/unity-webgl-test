@@ -9,13 +9,13 @@ import { Storage } from "aws-amplify";
 function App() {
 	const { unityProvider, isLoaded, loadingProgression } = useUnityContext({
 		loaderUrl:
-			"https://unitywebglfile164239-dev.s3.ap-northeast-2.amazonaws.com/public/Sample.loader.js",
+			"https://unitywebglfile164239-dev.s3.ap-northeast-2.amazonaws.com/public/webgl_test.loader.js",
 		dataUrl:
-			"https://unitywebglfile164239-dev.s3.ap-northeast-2.amazonaws.com/public/Sample.data",
+			"https://unitywebglfile164239-dev.s3.ap-northeast-2.amazonaws.com/public/webgl_test.data",
 		frameworkUrl:
-			"https://unitywebglfile164239-dev.s3.ap-northeast-2.amazonaws.com/public/Sample.framework.js",
+			"https://unitywebglfile164239-dev.s3.ap-northeast-2.amazonaws.com/public/webgl_test.framework.js",
 		codeUrl:
-			"https://unitywebglfile164239-dev.s3.ap-northeast-2.amazonaws.com/public/Sample.wasm",
+			"https://unitywebglfile164239-dev.s3.ap-northeast-2.amazonaws.com/public/webgl_test.wasm",
 	});
 
 	const loadingPercentage = Math.round(loadingProgression * 100);
@@ -53,7 +53,7 @@ function App() {
 	return (
 		<Unity
 			unityProvider={unityProvider}
-			style={{ width: 1920, height: 1080 }}
+			// style={{ width: 1920, height: 1080 }}
 			devicePixelRatio={devicePixelRatio}
 		/>
 	);
