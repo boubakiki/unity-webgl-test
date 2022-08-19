@@ -7,16 +7,17 @@ import { Unity, useUnityContext } from "react-unity-webgl";
 import { Storage } from "aws-amplify";
 
 function App() {
-	const { unityProvider, isLoaded, loadingProgression } = useUnityContext({
-		loaderUrl:
-			"https://unitywebglfile164239-dev.s3.ap-northeast-2.amazonaws.com/public/Mong_0802.loader.js",
-		dataUrl:
-			"https://unitywebglfile164239-dev.s3.ap-northeast-2.amazonaws.com/public/Mong_0802.data",
-		frameworkUrl:
-			"https://unitywebglfile164239-dev.s3.ap-northeast-2.amazonaws.com/public/Mong_0802.framework.js",
-		codeUrl:
-			"https://unitywebglfile164239-dev.s3.ap-northeast-2.amazonaws.com/public/Mong_0802.wasm",
-	});
+	const { unityProvider, isLoaded, loadingProgression, requestFullscreen } =
+		useUnityContext({
+			loaderUrl:
+				"https://unitywebglfile164239-dev.s3.ap-northeast-2.amazonaws.com/public/Mong_0802.loader.js",
+			dataUrl:
+				"https://unitywebglfile164239-dev.s3.ap-northeast-2.amazonaws.com/public/Mong_0802.data",
+			frameworkUrl:
+				"https://unitywebglfile164239-dev.s3.ap-northeast-2.amazonaws.com/public/Mong_0802.framework.js",
+			codeUrl:
+				"https://unitywebglfile164239-dev.s3.ap-northeast-2.amazonaws.com/public/Mong_0802.wasm",
+		});
 
 	const loadingPercentage = Math.round(loadingProgression * 100);
 
@@ -24,8 +25,10 @@ function App() {
 		window.devicePixelRatio,
 	);
 
-	const [innerWidth, setInnerWidth] = useState(window.innerWidth);
-	const [innerHeight, setInnerHeight] = useState(window.innerHeight);
+	const [width, setWidth] = useState(window.innerWidth);
+	const [height, setHeight] = useState(window.innerHeight);
+	const [marginLeft, setMarginLeft] = useState(0);
+	const [marginTop, setMarginTop] = useState(0);
 
 	const handleChangePixelRatio = useCallback(
 		function () {
@@ -54,19 +57,69 @@ function App() {
 	);
 
 	useEffect(() => {
+		if (window.matchMedia("(orientation: portrait)").matches) {
+			setWidth(window.innerWidth * (16 / 9.0));
+			setHeight(window.innerWidth);
+		} else {
+			if (window.innerHeight * (16 / 9.0) <= window.innerWidth) {
+				setWidth(window.innerHeight * (16 / 9.0));
+				setHeight(window.innerHeight);
+				setMarginLeft(
+					(window.innerWidth - window.innerHeight * (16 / 9.0)) / 2.0,
+				);
+			} else {
+				setWidth(window.innerWidth);
+				setHeight(window.innerWidth * (9 / 16.0));
+				setMarginTop(
+					(window.innerHeight - window.innerWidth * (9 / 16.0)) / 2.0,
+				);
+			}
+		}
+
 		window.addEventListener("resize", () => {
-			setInnerWidth(window.innerWidth);
-			setInnerHeight(window.innerHeight);
+			if (window.matchMedia("(orientation: portrait)").matches) {
+				setWidth(window.innerWidth * (16 / 9.0));
+				setHeight(window.innerWidth);
+			} else {
+				if (window.innerHeight * (16 / 9.0) <= window.innerWidth) {
+					setWidth(window.innerHeight * (16 / 9.0));
+					setHeight(window.innerHeight);
+					setMarginLeft(
+						(window.innerWidth - window.innerHeight * (16 / 9.0)) /
+							2.0,
+					);
+				} else {
+					setWidth(window.innerWidth);
+					setHeight(window.innerWidth * (9 / 16.0));
+					setMarginTop(
+						(window.innerHeight - window.innerWidth * (9 / 16.0)) /
+							2.0,
+					);
+				}
+			}
 		});
 	}, []);
 
 	return (
-		<Unity
-			unityProvider={unityProvider}
-			style={{ width: innerWidth, height: innerHeight }}
-			// style={{ width: 1920, height: 1080 }}
-			// devicePixelRatio={devicePixelRatio}
-		/>
+		<div
+			style={{
+				width: width,
+				height: height,
+				overflow: "hidden",
+				marginTop: marginTop,
+				marginLeft: marginLeft,
+			}}
+		>
+			<Unity
+				className={"unity_app"}
+				unityProvider={unityProvider}
+				style={{
+					width: width,
+					height: height,
+				}}
+				// devicePixelRatio={devicePixelRatio}
+			/>
+		</div>
 	);
 }
 
