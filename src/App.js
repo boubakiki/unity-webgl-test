@@ -22,6 +22,8 @@ function App() {
 	// 	window.devicePixelRatio,
 	// );
 
+	const [innerWidth, setInnerWidth] = useState(window.innerWidth);
+	const [innerHeight, setInnerHeight] = useState(window.innerHeight);
 	const [width, setWidth] = useState(window.innerWidth);
 	const [height, setHeight] = useState(window.innerHeight);
 	const [marginLeft, setMarginLeft] = useState(0);
@@ -54,38 +56,32 @@ function App() {
 	// );
 
 	useEffect(() => {
-		requestFullscreen(false);
-
-		if (window.innerHeight * (16 / 9.0) <= window.innerWidth) {
-			setWidth(window.innerHeight * (16 / 9.0));
-			setHeight(window.innerHeight);
-			setMarginLeft(
-				(window.innerWidth - window.innerHeight * (16 / 9.0)) / 2.0,
-			);
-		} else {
-			setWidth(window.innerWidth);
-			setHeight(window.innerWidth * (9 / 16.0));
-			setMarginTop(
-				(window.innerHeight - window.innerWidth * (9 / 16.0)) / 2.0,
-			);
-		}
+		requestFullscreen(true);
 
 		window.addEventListener("resize", () => {
-			if (window.innerHeight * (16 / 9.0) <= window.innerWidth) {
-				setWidth(window.innerHeight * (16 / 9.0));
-				setHeight(window.innerHeight);
-				setMarginLeft(
-					(window.innerWidth - window.innerHeight * (16 / 9.0)) / 2.0,
-				);
-			} else {
-				setWidth(window.innerWidth);
-				setHeight(window.innerWidth * (9 / 16.0));
-				setMarginTop(
-					(window.innerHeight - window.innerWidth * (9 / 16.0)) / 2.0,
-				);
-			}
+			setInnerWidth(window.innerWidth);
+			setInnerHeight(window.innerHeight);
 		});
 	}, []);
+
+	useEffect(() => {
+		if (innerHeight / innerWidth < 9.0 / 16.0) {
+			setHeight(innerHeight);
+			setWidth(innerHeight * (16.0 / 9.0));
+			setMarginLeft((innerWidth - innerHeight * (16.0 / 9.0)) / 2.0);
+			setMarginTop(0);
+		} else if (innerHeight / innerWidth > 9.0 / 16.0) {
+			setWidth(innerWidth);
+			setHeight(innerWidth * (9.0 / 16.0));
+			setMarginTop((innerHeight - innerWidth * (9.0 / 16.0)) / 2.0);
+			setMarginLeft(0);
+		} else {
+			setWidth(innerWidth);
+			setHeight(innerHeight);
+			setMarginLeft(0);
+			setMarginTop(0);
+		}
+	}, [innerWidth, innerHeight]);
 
 	return (
 		<div
@@ -97,7 +93,7 @@ function App() {
 				marginLeft: marginLeft,
 			}}
 		>
-			<button
+			{/* <button
 				onClick={() => {
 					console.log(window.screen.orientation);
 
@@ -116,7 +112,7 @@ function App() {
 				}}
 			>
 				회전
-			</button>
+			</button> */}
 			<Unity
 				className={"unity_app"}
 				unityProvider={unityProvider}
