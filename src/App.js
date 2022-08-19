@@ -1,10 +1,7 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
 
 import React, { useState, useEffect, useCallback } from "react";
 import { Unity, useUnityContext } from "react-unity-webgl";
-
-import { Storage } from "aws-amplify";
 
 function App() {
 	const { unityProvider, isLoaded, loadingProgression, requestFullscreen } =
@@ -98,6 +95,26 @@ function App() {
 				marginLeft: marginLeft,
 			}}
 		>
+			<button
+				onClick={() => {
+					console.log(window.screen.orientation);
+
+					const oppositeOrientation =
+						window.screen.orientation.type.startsWith("portrait")
+							? "landscape"
+							: "portrait";
+					window.screen.orientation
+						.lock(oppositeOrientation)
+						.then(() => {
+							console.log(`Locked to ${oppositeOrientation}\n`);
+						})
+						.catch((error) => {
+							console.error(`${error}\n`);
+						});
+				}}
+			>
+				회전
+			</button>
 			<Unity
 				className={"unity_app"}
 				unityProvider={unityProvider}
