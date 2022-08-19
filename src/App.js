@@ -54,6 +54,8 @@ function App() {
 	// );
 
 	useEffect(() => {
+		requestFullscreen(false);
+
 		if (window.innerHeight * (16 / 9.0) <= window.innerWidth) {
 			setWidth(window.innerHeight * (16 / 9.0));
 			setHeight(window.innerHeight);
