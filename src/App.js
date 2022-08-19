@@ -19,48 +19,59 @@ function App() {
 				"https://unitywebglfile164239-dev.s3.ap-northeast-2.amazonaws.com/public/Mong_0802.wasm",
 		});
 
-	const loadingPercentage = Math.round(loadingProgression * 100);
+	// const loadingPercentage = Math.round(loadingProgression * 100);
 
-	const [devicePixelRatio, setDevicePixelRatio] = useState(
-		window.devicePixelRatio,
-	);
+	// const [devicePixelRatio, setDevicePixelRatio] = useState(
+	// 	window.devicePixelRatio,
+	// );
 
 	const [width, setWidth] = useState(window.innerWidth);
 	const [height, setHeight] = useState(window.innerHeight);
 	const [marginLeft, setMarginLeft] = useState(0);
 	const [marginTop, setMarginTop] = useState(0);
 
-	const handleChangePixelRatio = useCallback(
-		function () {
-			// A function which will update the device pixel ratio of the Unity
-			// Application to match the device pixel ratio of the browser.
-			const updateDevicePixelRatio = function () {
-				setDevicePixelRatio(window.devicePixelRatio);
-			};
-			// A media matcher which watches for changes in the device pixel ratio.
-			const mediaMatcher = window.matchMedia(
-				`screen and (resolution: ${devicePixelRatio}dppx)`,
-			);
-			// Adding an event listener to the media matcher which will update the
-			// device pixel ratio of the Unity Application when the device pixel
-			// ratio changes.
-			mediaMatcher.addEventListener("change", updateDevicePixelRatio);
-			return function () {
-				// Removing the event listener when the component unmounts.
-				mediaMatcher.removeEventListener(
-					"change",
-					updateDevicePixelRatio,
-				);
-			};
-		},
-		[devicePixelRatio],
-	);
+	// const handleChangePixelRatio = useCallback(
+	// 	function () {
+	// 		// A function which will update the device pixel ratio of the Unity
+	// 		// Application to match the device pixel ratio of the browser.
+	// 		const updateDevicePixelRatio = function () {
+	// 			setDevicePixelRatio(window.devicePixelRatio);
+	// 		};
+	// 		// A media matcher which watches for changes in the device pixel ratio.
+	// 		const mediaMatcher = window.matchMedia(
+	// 			`screen and (resolution: ${devicePixelRatio}dppx)`,
+	// 		);
+	// 		// Adding an event listener to the media matcher which will update the
+	// 		// device pixel ratio of the Unity Application when the device pixel
+	// 		// ratio changes.
+	// 		mediaMatcher.addEventListener("change", updateDevicePixelRatio);
+	// 		return function () {
+	// 			// Removing the event listener when the component unmounts.
+	// 			mediaMatcher.removeEventListener(
+	// 				"change",
+	// 				updateDevicePixelRatio,
+	// 			);
+	// 		};
+	// 	},
+	// 	[devicePixelRatio],
+	// );
 
 	useEffect(() => {
-		if (window.matchMedia("(orientation: portrait)").matches) {
-			setWidth(window.innerWidth * (16 / 9.0));
-			setHeight(window.innerWidth);
+		if (window.innerHeight * (16 / 9.0) <= window.innerWidth) {
+			setWidth(window.innerHeight * (16 / 9.0));
+			setHeight(window.innerHeight);
+			setMarginLeft(
+				(window.innerWidth - window.innerHeight * (16 / 9.0)) / 2.0,
+			);
 		} else {
+			setWidth(window.innerWidth);
+			setHeight(window.innerWidth * (9 / 16.0));
+			setMarginTop(
+				(window.innerHeight - window.innerWidth * (9 / 16.0)) / 2.0,
+			);
+		}
+
+		window.addEventListener("resize", () => {
 			if (window.innerHeight * (16 / 9.0) <= window.innerWidth) {
 				setWidth(window.innerHeight * (16 / 9.0));
 				setHeight(window.innerHeight);
@@ -73,29 +84,6 @@ function App() {
 				setMarginTop(
 					(window.innerHeight - window.innerWidth * (9 / 16.0)) / 2.0,
 				);
-			}
-		}
-
-		window.addEventListener("resize", () => {
-			if (window.matchMedia("(orientation: portrait)").matches) {
-				setWidth(window.innerWidth * (16 / 9.0));
-				setHeight(window.innerWidth);
-			} else {
-				if (window.innerHeight * (16 / 9.0) <= window.innerWidth) {
-					setWidth(window.innerHeight * (16 / 9.0));
-					setHeight(window.innerHeight);
-					setMarginLeft(
-						(window.innerWidth - window.innerHeight * (16 / 9.0)) /
-							2.0,
-					);
-				} else {
-					setWidth(window.innerWidth);
-					setHeight(window.innerWidth * (9 / 16.0));
-					setMarginTop(
-						(window.innerHeight - window.innerWidth * (9 / 16.0)) /
-							2.0,
-					);
-				}
 			}
 		});
 	}, []);
