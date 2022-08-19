@@ -63,7 +63,8 @@ function App() {
 	return (
 		<Unity
 			unityProvider={unityProvider}
-			style={{ width: innerWidth, height: innerHeight }}
+			// style={{ width: innerWidth, height: innerHeight }}
+			style={{ width: 1920, height: 1080 }}
 			// devicePixelRatio={devicePixelRatio}
 		/>
 	);
