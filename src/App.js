@@ -7,13 +7,13 @@ function App() {
 	const { unityProvider, isLoaded, loadingProgression, requestFullscreen } =
 		useUnityContext({
 			loaderUrl:
-				"https://unitywebglfile164239-dev.s3.ap-northeast-2.amazonaws.com/public/fresh.loader.js",
+				"https://unitywebglfile164239-dev.s3.ap-northeast-2.amazonaws.com/public/build.loader.js",
 			dataUrl:
-				"https://unitywebglfile164239-dev.s3.ap-northeast-2.amazonaws.com/public/fresh.data",
+				"https://unitywebglfile164239-dev.s3.ap-northeast-2.amazonaws.com/public/build.data",
 			frameworkUrl:
-				"https://unitywebglfile164239-dev.s3.ap-northeast-2.amazonaws.com/public/fresh.framework.js",
+				"https://unitywebglfile164239-dev.s3.ap-northeast-2.amazonaws.com/public/build.framework.js",
 			codeUrl:
-				"https://unitywebglfile164239-dev.s3.ap-northeast-2.amazonaws.com/public/fresh.wasm",
+				"https://unitywebglfile164239-dev.s3.ap-northeast-2.amazonaws.com/public/build.wasm",
 		});
 
 	// const loadingPercentage = Math.round(loadingProgression * 100);
